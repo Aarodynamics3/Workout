@@ -36,11 +36,26 @@ namespace Workout {
                 temp = new Exercise(name, reps, weight);
 
                 // Ask if adding another exercise.
+                Console.Write("Add another exercise? (y/n) ");
+                String response = Console.ReadLine();
+                response = response.ToLower();
+
+                exercises.Add(temp);
+
+                // If not adding another exercise, exit loop.
+                if (response.Equals("n")) { doneInputting = true; }
             }
         }
 
         public String toDelimitedString() {
-            return null;
+            String ret = $"{week}|{day}";
+
+            // Add each exercise to the delimited string.
+            foreach (Exercise ex in exercises) {
+                ret += $"|{ex.toDelimitedString()}";
+            }
+
+            return ret;
         }
     }
 }
