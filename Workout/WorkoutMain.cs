@@ -6,6 +6,8 @@ namespace Workout {
             String response;
             bool endLoop = false;
 
+            //TODO write to a file instead of printing out to console
+
             while (!endLoop) {
                 Console.Write("Add a new workout? (y/n) ");
                 response = Console.ReadLine();
@@ -25,6 +27,9 @@ namespace Workout {
                      * if they want to use the same exercises as the previous day
                      * For example: if the user is inputting week 2 day 5, ask if they
                      * are using the same exercises as week 1 day 5.
+                     * 
+                     * TODO also create a preview to go along w/ this prompt
+                     * Example: (DL PD MR FP HC DBC)
                      */
 
                     Workout _workout = new Workout(week, day);
