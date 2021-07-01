@@ -1,12 +1,31 @@
 ﻿using System;
+using System.Collections;
+using System.IO;
 
 namespace Workout {
     class WorkoutMain {
         static void Main(string[] args) {
             String response;
+            ArrayList workouts;
             bool endLoop = false;
 
+            // Directory path of the application executable.
+            String startupPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            String fileName = $"{startupPath}\\WorkoutList.txt";
+
             //TODO write to a file instead of printing out to console
+            // If file does not exist, create it. Else, read it in and create a list of workouts for future reference.
+            if (!File.Exists(fileName)) {
+                File.Create(fileName);
+            } else {
+                workouts = new ArrayList();
+                using (StreamReader sr = File.OpenText(fileName)) {
+                    string s = "";
+                    while ((s = sr.ReadLine()) != null) {
+                        workouts.Add(new Workout(s));
+                    }
+                }
+            }
 
             while (!endLoop) {
                 Console.Write("Add a new workout? (y/n) ");
