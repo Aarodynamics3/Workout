@@ -39,7 +39,6 @@ namespace Workout {
 
             // While not done inputting, prompt for name, reps, and weight.
             while (!doneInputting) {
-                //TODO format the users input so later the exercises can be abbreviated for preview
                 Console.Write("Name: ");
                 name = Console.ReadLine().ToTitleCase();
 
