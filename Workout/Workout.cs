@@ -41,7 +41,7 @@ namespace Workout {
             while (!doneInputting) {
                 //TODO format the users input so later the exercises can be abbreviated for preview
                 Console.Write("Name: ");
-                name = Console.ReadLine();
+                name = Console.ReadLine().ToTitleCase();
 
                 Console.Write("Reps: ");
                 reps = Console.ReadLine();
