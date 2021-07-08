@@ -26,7 +26,7 @@ namespace Workout {
             
             for (int i = 0; i < (list.Length - 2) / 3; i++) {
                 exercises.Add(
-                    new Exercise(list[i + 2], list[i + 3], Convert.ToDouble(list[i + 4]))
+                    new Exercise(list[(i * 3) + 2], list[(i * 3) + 3], Convert.ToDouble(list[(i * 3) + 4]))
                 );
             }
         }

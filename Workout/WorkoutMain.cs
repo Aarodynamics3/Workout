@@ -6,25 +6,27 @@ namespace Workout {
     class WorkoutMain {
         static void Main(string[] args) {
             String response;
-            ArrayList workouts;
+            ArrayList workouts = new ArrayList(); ;
             bool endLoop = false;
 
             // Directory path of the application executable.
             String startupPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-            String fileName = $"{startupPath}\\WorkoutList.txt";
+            String filePath = $"{startupPath}\\WorkoutList.txt";
 
-            //TODO write to a file instead of printing out to console
             // If file does not exist, create it. Else, read it in and create a list of workouts for future reference.
-            if (!File.Exists(fileName)) {
-                File.Create(fileName);
+            if (!File.Exists(filePath)) {
+                File.Create(filePath);
             } else {
-                workouts = new ArrayList();
-                using (StreamReader sr = File.OpenText(fileName)) {
+                using (StreamReader sr = File.OpenText(filePath)) {
                     string s = "";
-                    while ((s = sr.ReadLine()) != null) {
+                    while (!string.IsNullOrEmpty(s = sr.ReadLine())) {
                         workouts.Add(new Workout(s));
                     }
                 }
+            }
+
+            foreach (Workout wks in workouts) {
+                Console.WriteLine(wks.toDelimitedString());
             }
 
             while (!endLoop) {
@@ -52,8 +54,10 @@ namespace Workout {
                      */
 
                     Workout _workout = new Workout(week, day);
+                    String _workoutString = _workout.toDelimitedString();
 
-                    Console.WriteLine(_workout.toDelimitedString());
+                    Console.WriteLine(_workoutString);
+                    File.AppendAllText(filePath, _workoutString + "\n");
                 } else if (response.Equals("n")) {
                     endLoop = true;
                 }
