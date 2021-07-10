@@ -8,12 +8,12 @@ namespace Workout {
         private int week, day;
         private ArrayList exercises;
 
-        public Workout(int week, int day) {
+        public Workout(int week, int day, ArrayList exerciseNames, bool usePrevious) {
             this.week = week;
             this.day = day;
-            exercises = new ArrayList();
+            this.exercises = new ArrayList();
 
-            constructWorkout();
+            constructWorkout(exerciseNames, usePrevious);
         }
 
         // Creates a workout from a delimited string.
@@ -31,34 +31,39 @@ namespace Workout {
             }
         }
 
-        private void constructWorkout() {
+        private void constructWorkout(ArrayList exerciseNames, bool usePrevious) {
             bool doneInputting = false;
             String name, reps;
             double weight;
             Exercise temp;
-
+            int count = 0;
+            
             // While not done inputting, prompt for name, reps, and weight.
             while (!doneInputting) {
                 Console.Write("Name: ");
-                name = Console.ReadLine().ToTitleCase();
+                if (usePrevious) {
+                    name = (String) exerciseNames[count];
+                    Console.Write($"{name}\n");
+                    doneInputting = ++count >= exerciseNames.Count;
+                } else {
+                    name = Console.ReadLine().ToTitleCase();
+                }
 
                 Console.Write("Reps: ");
-                reps = Console.ReadLine();
+                reps = Console.ReadLine().Replace(" ", "");
 
                 Console.Write("Weight: ");
                 weight = Convert.ToDouble(Console.ReadLine());
 
                 temp = new Exercise(name, reps, weight);
 
-                // Ask if adding another exercise.
-                Console.Write("Add another exercise? (y/n) ");
-                String response = Console.ReadLine();
-                response = response.ToLower();
-
                 exercises.Add(temp);
 
                 // If not adding another exercise, exit loop.
-                if (response.Equals("n")) { doneInputting = true; }
+                if (!usePrevious) {
+                    Console.Write("Add another exercise? (y/n) ");
+                    doneInputting = Console.ReadLine().ToLower().Equals("n");
+                }
             }
         }
 

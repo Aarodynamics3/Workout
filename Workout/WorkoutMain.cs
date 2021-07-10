@@ -26,6 +26,7 @@ namespace Workout {
                 }
             }
 
+            //TODO Remove eventually.
             foreach (Workout wks in workouts) {
                 Console.WriteLine(wks.toDelimitedString());
             }
@@ -45,13 +46,8 @@ namespace Workout {
                     day = Convert.ToInt32(Console.ReadLine());
 
                     /*
-                     * TODO: Read in all of the previous workouts and ask the user
+                     * Read in all of the previous workouts and ask the user
                      * if they want to use the same exercises as the previous day
-                     * For example: if the user is inputting week 2 day 5, ask if they
-                     * are using the same exercises as week 1 day 5.
-                     * 
-                     * TODO also create a preview to go along w/ this prompt
-                     * Example: (DL PD MR FP HC DBC)
                      */
                     var previousWorkout = (from Workout wk in workouts where 
                                            wk.getWeek() == week - 1 && wk.getDay() == day select wk).ToArray();
@@ -77,7 +73,7 @@ namespace Workout {
                         Console.WriteLine("No previous records to reference.");
                     }
 
-                    Workout _workout = new Workout(week, day);
+                    Workout _workout = new Workout(week, day, exercises, usePrevious);
                     String _workoutString = _workout.toDelimitedString();
 
                     Console.WriteLine(_workoutString);
