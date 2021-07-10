@@ -28,5 +28,9 @@ namespace Workout {
 		public String toDelimitedString() {
 			return $"{name}|{reps}|{weight}";
         }
+
+		public String getName() {
+			return this.name;
+        }
 	}
 }

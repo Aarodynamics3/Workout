@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.IO;
+using System.Linq;
 
 namespace Workout {
     class WorkoutMain {
         static void Main(string[] args) {
             String response;
-            ArrayList workouts = new ArrayList(); ;
+            ArrayList workouts = new();
             bool endLoop = false;
 
             // Directory path of the application executable.
@@ -52,6 +53,29 @@ namespace Workout {
                      * TODO also create a preview to go along w/ this prompt
                      * Example: (DL PD MR FP HC DBC)
                      */
+                    var previousWorkout = (from Workout wk in workouts where 
+                                           wk.getWeek() == week - 1 && wk.getDay() == day select wk).ToArray();
+                    bool usePrevious = false;
+                    ArrayList exercises = new();
+
+                    // If the length is 1, prompt the user if they would like to use the same exercises as last day.
+                    if (previousWorkout.Length == 1) {
+                        Console.WriteLine("Would you like to use the same exercises as the last workout? (y/n)");
+
+                        foreach (Exercise ex in previousWorkout[0].getExercises()) {
+                            var name = ex.getName();
+                            exercises.Add(name);
+                            var preview = String.Concat(name.Where(c => char.IsUpper(c)));
+                            Console.Write($"{preview} ");
+                        }
+                        Console.WriteLine();
+
+                        usePrevious = Console.ReadLine().ToLower().Equals("y");
+
+                    // Else, there are no examples to reference.
+                    } else {
+                        Console.WriteLine("No previous records to reference.");
+                    }
 
                     Workout _workout = new Workout(week, day);
                     String _workoutString = _workout.toDelimitedString();

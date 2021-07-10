@@ -72,5 +72,17 @@ namespace Workout {
 
             return ret;
         }
+
+        public int getWeek() {
+            return this.week;
+        }
+
+        public int getDay() {
+            return this.day;
+        }
+
+        public ArrayList getExercises() {
+            return this.exercises;
+        }
     }
 }
