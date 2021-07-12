@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -7,7 +7,7 @@ namespace Workout {
     class WorkoutMain {
         static void Main(string[] args) {
             String response;
-            ArrayList workouts = new();
+            List<Workout> workouts = new();
             bool endLoop = false;
 
             // Directory path of the application executable.
@@ -26,11 +26,6 @@ namespace Workout {
                 }
             }
 
-            //TODO Remove eventually.
-            foreach (Workout wks in workouts) {
-                Console.WriteLine(wks.toDelimitedString());
-            }
-
             while (!endLoop) {
                 Console.Write("Add a new workout? (y/n) ");
                 response = Console.ReadLine();
@@ -45,20 +40,25 @@ namespace Workout {
                     Console.Write("Day: ");
                     day = Convert.ToInt32(Console.ReadLine());
 
+                    workouts.Sort();
+
+                    //TODO Remove eventually.
+                    Workout.printWorkouts(workouts);
+
                     /*
                      * Read in all of the previous workouts and ask the user
                      * if they want to use the same exercises as the previous day
                      */
-                    var previousWorkout = (from Workout wk in workouts where 
-                                           wk.getWeek() == week - 1 && wk.getDay() == day select wk).ToArray();
+                    var previousWorkout = workouts.FirstOrDefault(workout => workout.getWeek() == week - 1 && workout.getDay() == day);
                     bool usePrevious = false;
-                    ArrayList exercises = new();
+                    List<String> exercises = new();
+                    
 
                     // If the length is 1, prompt the user if they would like to use the same exercises as last day.
-                    if (previousWorkout.Length == 1) {
+                    if (previousWorkout != null) {
                         Console.WriteLine("Would you like to use the same exercises as the last workout? (y/n)");
 
-                        foreach (Exercise ex in previousWorkout[0].getExercises()) {
+                        foreach (Exercise ex in previousWorkout.getExercises()) {
                             var name = ex.getName();
                             exercises.Add(name);
                             var preview = String.Concat(name.Where(c => char.IsUpper(c)));

@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Workout {
-    class Workout {
+    class Workout:IComparable<Workout> {
         private int week, day;
-        private ArrayList exercises;
+        private List<Exercise> exercises;
 
-        public Workout(int week, int day, ArrayList exerciseNames, bool usePrevious) {
+        public Workout(int week, int day, List<String> exerciseNames, bool usePrevious) {
             this.week = week;
             this.day = day;
-            this.exercises = new ArrayList();
+            this.exercises = new();
 
             constructWorkout(exerciseNames, usePrevious);
         }
@@ -22,7 +20,7 @@ namespace Workout {
 
             this.week = Convert.ToInt32(list[0]);
             this.day = Convert.ToInt32(list[1]);
-            exercises = new ArrayList();
+            this.exercises = new();
             
             for (int i = 0; i < (list.Length - 2) / 3; i++) {
                 exercises.Add(
@@ -31,7 +29,7 @@ namespace Workout {
             }
         }
 
-        private void constructWorkout(ArrayList exerciseNames, bool usePrevious) {
+        private void constructWorkout(List<String> exerciseNames, bool usePrevious) {
             bool doneInputting = false;
             String name, reps;
             double weight;
@@ -86,8 +84,21 @@ namespace Workout {
             return this.day;
         }
 
-        public ArrayList getExercises() {
+        public List<Exercise> getExercises() {
             return this.exercises;
+        }
+
+        public static void printWorkouts(List<Workout> workouts) {
+            foreach (Workout wks in workouts) {
+                Console.WriteLine(wks.toDelimitedString());
+            }
+        }
+
+        public int CompareTo(Workout other) {
+            if (this.week == other.getWeek()) {
+                return this.day - other.getDay();
+            }
+            return this.week - other.getWeek();
         }
     }
 }
