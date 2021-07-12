@@ -30,8 +30,7 @@ namespace Workout {
 
             while (!endLoop) {
                 Console.Write("Add a new workout? (y/n) ");
-                response = Console.ReadLine();
-                response = response.ToLower();
+                response = Console.ReadLine().ToLower().Trim();
 
                 if (response.Equals("y")) {
                     wh.hydrateNewWorkout();
