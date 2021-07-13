@@ -22,10 +22,10 @@ namespace Workout {
             Console.Write("Day: ");
             day = Convert.ToInt32(Console.ReadLine());
 
-            workouts.Sort();
+            workouts.Sort((a,b) => b.CompareTo(a));
 
             // Read in all of the previous workouts and ask the user if they want to use the same exercises as the previous day.
-            var previousWorkout = workouts.FirstOrDefault(workout => workout.getWeek() == week - 1 && workout.getDay() == day);
+            var previousWorkout = workouts.FirstOrDefault(workout => workout.getWeek() < week && workout.getDay() == day);
             bool usePrevious = false;
             List<String> exercises = new();
 
