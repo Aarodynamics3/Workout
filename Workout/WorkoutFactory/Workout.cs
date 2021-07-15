@@ -6,10 +6,12 @@ namespace Workout {
         private int week, day;
         private List<Exercise> exercises;
 
-        public Workout(int week, int day, List<String> exerciseNames, bool usePrevious) {
+        public Workout(int week, int day) {
             this.week = week;
             this.day = day;
-            exercises = WorkoutHydrator.constructWorkout(exerciseNames, usePrevious);
+
+            // Calls to the hydrator which prompts the user to create exercises for the workout.
+            exercises = WorkoutHydrator.constructExercises();
         }
 
         // Creates a workout from a delimited string.

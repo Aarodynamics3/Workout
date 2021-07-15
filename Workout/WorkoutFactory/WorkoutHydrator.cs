@@ -7,6 +7,8 @@ namespace Workout {
     class WorkoutHydrator {
         private String filePath;
         private List<Workout> workouts;
+        private static bool usePrevious;
+        private static List<String> exerciseNames;
 
         public WorkoutHydrator(List<Workout> input, String file) {
             workouts = input;
@@ -26,8 +28,8 @@ namespace Workout {
 
             // Read in all of the previous workouts and ask the user if they want to use the same exercises as the previous day.
             var previousWorkout = workouts.FirstOrDefault(workout => workout.getWeek() < week && workout.getDay() == day);
-            bool usePrevious = false;
-            List<String> exercises = new();
+            usePrevious = false;
+            exerciseNames = new();
 
             // If the length is 1, prompt the user if they would like to use the same exercises as last day.
             if (previousWorkout != null) {
@@ -35,7 +37,7 @@ namespace Workout {
 
                 foreach (Exercise ex in previousWorkout.getExercises()) {
                     var name = ex.getName();
-                    exercises.Add(name);
+                    exerciseNames.Add(name);
                     var preview = String.Concat(name.Where(c => char.IsUpper(c)));
                     Console.Write($"{preview} ");
                 }
@@ -48,14 +50,14 @@ namespace Workout {
                 Console.WriteLine("No previous records to reference.");
             }
 
-            Workout _workout = new Workout(week, day, exercises, usePrevious);
+            Workout _workout = new Workout(week, day);
             String _workoutString = _workout.toDelimitedString();
 
             Console.WriteLine(_workoutString);
             File.AppendAllTextAsync(filePath, _workoutString + "\n");
         }
 
-        public static List<Exercise> constructWorkout(List<String> exerciseNames, bool usePrevious) {
+        public static List<Exercise> constructExercises() {
             bool doneInputting = false;
             String name, reps;
             double weight;
@@ -67,7 +69,7 @@ namespace Workout {
             while (!doneInputting) {
                 Console.Write("Name: ");
                 if (usePrevious) {
-                    name = (String)exerciseNames[count];
+                    name = exerciseNames[count];
                     Console.Write($"{name}\n");
                     doneInputting = ++count >= exerciseNames.Count;
                 } else {
