@@ -15,6 +15,22 @@ namespace Workout {
             filePath = file;
         }
 
+        public void promptForWorkouts() {
+            bool endLoop = false;
+            String response;
+
+            while (!endLoop) {
+                Console.Write("Add a new workout? (y/n) ");
+                response = Console.ReadLine().ToLower().Trim();
+
+                if (response.Equals("y")) {
+                    hydrateNewWorkout();
+                } else {
+                    endLoop = true;
+                }
+            }
+        }
+
         public void hydrateNewWorkout() {
             int week, day;
 

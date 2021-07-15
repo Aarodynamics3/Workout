@@ -6,9 +6,7 @@ using System.Linq;
 namespace Workout {
     class WorkoutMain {
         static void Main(string[] args) {
-            String response;
             List<Workout> workouts = new();
-            bool endLoop = false;
 
             // Directory path of the application executable.
             String startupPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
@@ -28,16 +26,7 @@ namespace Workout {
 
             WorkoutHydrator wh = new(workouts, filePath);
 
-            while (!endLoop) {
-                Console.Write("Add a new workout? (y/n) ");
-                response = Console.ReadLine().ToLower().Trim();
-
-                if (response.Equals("y")) {
-                    wh.hydrateNewWorkout();
-                } else {
-                    endLoop = true;
-                }
-            }
+            wh.promptForWorkouts();
         }
     }
 }
