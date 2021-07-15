@@ -52,7 +52,7 @@ namespace Workout {
             String _workoutString = _workout.toDelimitedString();
 
             Console.WriteLine(_workoutString);
-            File.AppendAllText(filePath, _workoutString + "\n");
+            File.AppendAllTextAsync(filePath, _workoutString + "\n");
         }
     }
 }
