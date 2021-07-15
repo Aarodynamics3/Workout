@@ -54,5 +54,44 @@ namespace Workout {
             Console.WriteLine(_workoutString);
             File.AppendAllTextAsync(filePath, _workoutString + "\n");
         }
+
+        public static List<Exercise> constructWorkout(List<String> exerciseNames, bool usePrevious) {
+            bool doneInputting = false;
+            String name, reps;
+            double weight;
+            Exercise temp;
+            int count = 0;
+            List<Exercise> exercises = new();
+
+            // While not done inputting, prompt for name, reps, and weight.
+            while (!doneInputting) {
+                Console.Write("Name: ");
+                if (usePrevious) {
+                    name = (String)exerciseNames[count];
+                    Console.Write($"{name}\n");
+                    doneInputting = ++count >= exerciseNames.Count;
+                } else {
+                    name = Console.ReadLine().ToTitleCase();
+                }
+
+                Console.Write("Reps: ");
+                reps = Console.ReadLine().Replace(" ", "");
+
+                Console.Write("Weight: ");
+                weight = Convert.ToDouble(Console.ReadLine());
+
+                temp = new Exercise(name, reps, weight);
+
+                exercises.Add(temp);
+
+                // If not adding another exercise, exit loop.
+                if (!usePrevious) {
+                    Console.Write("Add another exercise? (y/n) ");
+                    doneInputting = Console.ReadLine().ToLower().Equals("n");
+                }
+            }
+
+            return exercises;
+        }
     }
 }

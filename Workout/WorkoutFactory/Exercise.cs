@@ -11,12 +11,6 @@ namespace Workout {
 		 */
 		private double weight;
 
-		public Exercise() {
-			name = "";
-			reps = "";
-			weight = 0;
-        }
-
 		public Exercise(String name, String reps, double weight) {
 			this.name = name;
 			this.reps = reps;
