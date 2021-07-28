@@ -34,11 +34,13 @@ namespace Workout {
         public void hydrateNewWorkout() {
             int week, day;
 
-            Console.Write("Week: ");
-            week = Convert.ToInt32(Console.ReadLine());
+            do {
+                Console.Write("Week: ");
+            } while (!int.TryParse(Console.ReadLine(), out week));
 
-            Console.Write("Day: ");
-            day = Convert.ToInt32(Console.ReadLine());
+            do {
+                Console.Write("Day: ");
+            } while (!int.TryParse(Console.ReadLine(), out day));
 
             workouts.Sort((a,b) => b.CompareTo(a));
 
@@ -83,20 +85,25 @@ namespace Workout {
 
             // While not done inputting, prompt for name, reps, and weight.
             while (!doneInputting) {
-                Console.Write("Name: ");
                 if (usePrevious) {
                     name = exerciseNames[count];
-                    Console.Write($"{name}\n");
+                    Console.Write($"Name:\n{name}\n");
                     doneInputting = ++count >= exerciseNames.Count;
                 } else {
-                    name = Console.ReadLine().ToTitleCase();
+                    do {
+                        Console.Write("Name: ");
+                        name = Console.ReadLine().ToTitleCase().Trim();
+                    } while (String.IsNullOrEmpty(name));
                 }
 
-                Console.Write("Reps: ");
-                reps = Console.ReadLine().Replace(" ", "");
+                do {
+                    Console.Write("Reps: ");
+                    reps = Console.ReadLine().Trim().Replace(" ", "");
+                } while (String.IsNullOrEmpty(reps));
 
-                Console.Write("Weight: ");
-                weight = Convert.ToDouble(Console.ReadLine());
+                do {
+                    Console.Write("Weight: ");
+                } while (!double.TryParse(Console.ReadLine(), out weight));
 
                 temp = new Exercise(name, reps, weight);
 
@@ -105,7 +112,8 @@ namespace Workout {
                 // If not adding another exercise, exit loop.
                 if (!usePrevious) {
                     Console.Write("Add another exercise? (y/n) ");
-                    doneInputting = Console.ReadLine().ToLower().Equals("n");
+                    String inp = Console.ReadLine().ToLower();
+                    doneInputting = inp.Equals("n");
                 }
             }
 
