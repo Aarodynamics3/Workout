@@ -87,7 +87,7 @@ namespace Workout {
             while (!doneInputting) {
                 if (usePrevious) {
                     name = exerciseNames[count];
-                    Console.Write($"Name:\n{name}\n");
+                    Console.Write($"Name: {name}\n");
                     doneInputting = ++count >= exerciseNames.Count;
                 } else {
                     do {
