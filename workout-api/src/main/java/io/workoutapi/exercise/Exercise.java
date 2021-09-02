@@ -1,15 +1,31 @@
 package io.workoutapi.exercise;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import io.workoutapi.workout.Workout;
+
+@Entity
+@Table(name = "exercises")
 public class Exercise {
-	private String id, name, reps;
+	@Id
+	private String id;
+	private String name, reps;
 	private double weight;
 	
-	public Exercise(String id, String name, String reps, double weight) {
+	@ManyToOne
+	@JoinColumn(name = "workout_id")
+	private Workout workout;
+	
+	public Exercise(String id, String name, String reps, double weight, Workout workout) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.reps = reps;
 		this.weight = weight;
+		this.workout = workout;
 	}
 	
 	public String getId() {
@@ -36,6 +52,11 @@ public class Exercise {
 	public void setWeight(double weight) {
 		this.weight = weight;
 	}
-	
+	public Workout getWorkout() {
+		return workout;
+	}
+	public void setWorkout(Workout workout) {
+		this.workout = workout;
+	}
 	
 }

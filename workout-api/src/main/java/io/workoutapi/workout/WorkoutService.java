@@ -1,40 +1,35 @@
 package io.workoutapi.workout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class WorkoutService {
-	private List<Workout> workouts = new ArrayList<>(Arrays.asList(
-			new Workout("ahanrahan_1_1", 1, 1),
-			new Workout("ahanrahan_1_2", 1, 2)
-			));
+	
+	@Autowired
+	private WorkoutRepository workoutRepository;
 	
 	public List<Workout> getAllWorkouts() {
+		List<Workout> workouts = new ArrayList<Workout>();
+		workoutRepository.findAll().forEach(workouts::add);
 		return workouts;
 	}
 	
 	public Workout getWorkout(String id) {
-		return workouts.stream().filter(w -> w.getId().equals(id)).findFirst().get();
+		return workoutRepository.findById(id).get();
 	}
 
 	public void addWorkout(Workout workout) {
-		workouts.add(workout);
+		workoutRepository.save(workout);
 	}
 
 	public void updateWorkout(Workout workout, String id) {
-		for (int i = 0; i < workouts.size(); i++) {
-			Workout w = workouts.get(i);
-			if (w.getId().equals(id)) {
-				workouts.set(i, workout);
-				return;
-			}
-		}
+		workoutRepository.save(workout);
 	}
 
 	public void deleteWorkout(String id) {
-		workouts.removeIf(w -> w.getId().equals(id));
+		workoutRepository.deleteById(id);
 	}
 }
