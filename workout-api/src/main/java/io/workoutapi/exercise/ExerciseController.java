@@ -34,13 +34,13 @@ public class ExerciseController {
 		exerciseService.addExercise(exercise);
 	}
 	
-	@PutMapping(value = "/workouts/{workoutId}/execises/{exerciseId}")
+	@PutMapping(value = "/workouts/{workoutId}/exercises/{exerciseId}")
 	public void updateExercise(@RequestBody Exercise exercise, @PathVariable String workoutId) {
 		exercise.setWorkout(new Workout(workoutId, -1, -1));
 		exerciseService.updateExercise(exercise);
 	}
 	
-	@DeleteMapping(value = "/workouts/{workoutId}/execises/{exerciseId}")
+	@DeleteMapping(value = "/workouts/{workoutId}/exercises/{exerciseId}")
 	public void deleteExercise(@PathVariable String exerciseId) {
 		exerciseService.deleteExercise(exerciseId);
 	}
