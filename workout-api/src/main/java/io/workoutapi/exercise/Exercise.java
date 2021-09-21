@@ -2,7 +2,6 @@ package io.workoutapi.exercise;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import io.workoutapi.workout.Workout;
@@ -16,16 +15,19 @@ public class Exercise {
 	private double weight;
 	
 	@ManyToOne
-	@JoinColumn(name = "workout_id")
 	private Workout workout;
 	
-	public Exercise(String id, String name, String reps, double weight, Workout workout) {
+	public Exercise() {
+		
+	}
+	
+	public Exercise(String id, String name, String reps, double weight, String workoutId) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.reps = reps;
 		this.weight = weight;
-		this.workout = workout;
+		this.workout = new Workout(workoutId,-1,-1);
 	}
 	
 	public String getId() {

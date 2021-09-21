@@ -1,11 +1,8 @@
 package io.workoutapi.workout;
 
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import io.workoutapi.exercise.Exercise;
 
 @Entity
 @Table(name = "workouts")
@@ -13,8 +10,6 @@ public class Workout {
 	@Id
 	private String id;
 	private int week, day;
-	@OneToMany(mappedBy = "workout")
-	private List<Exercise> exercises;
 	
 	public Workout() {
 		
@@ -44,11 +39,5 @@ public class Workout {
 	}
 	public void setDay(int day) {
 		this.day = day;
-	}
-	public List<Exercise> getExercises() {
-		return exercises;
-	}
-	public void setExercises(List<Exercise> exercises) {
-		this.exercises = exercises;
 	}
 }

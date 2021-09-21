@@ -10,34 +10,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.workoutapi.workout.Workout;
+
 @RestController
 public class ExerciseController {
 
 	@Autowired
 	private ExerciseService exerciseService;
 	
-	@RequestMapping("/exercises")
-	public List<Exercise> getAllExercises() {
-		return exerciseService.getAllExercises();
+	@RequestMapping("/workouts/{workoutid}/exercises")
+	public List<Exercise> getAllExercises(@PathVariable String workoutid) {
+		return exerciseService.getAllExercises(workoutid);
 	}
 	
-	@RequestMapping("/exercises/{id}")
-	public Exercise getExercise(@PathVariable String id) {
-		return exerciseService.getExercise(id);
+	@RequestMapping("/workouts/{workoutId}/exercises/{exerciseId}")
+	public Exercise getExercise(@PathVariable String exerciseId) {
+		return exerciseService.getExercise(exerciseId);
 	}
 	
-	@PostMapping(value = "/exercises")
-	public void addExercise(@RequestBody Exercise exercise) {
+	@PostMapping(value = "/workouts/{workoutId}/exercises")
+	public void addExercise(@RequestBody Exercise exercise, @PathVariable String workoutId) {
+		exercise.setWorkout(new Workout(workoutId, -1, -1));
 		exerciseService.addExercise(exercise);
 	}
 	
-	@PutMapping(value = "/exercises/{id}")
-	public void updateExercise(@RequestBody Exercise exercise, @PathVariable String id) {
-		exerciseService.updateExercise(exercise, id);
+	@PutMapping(value = "/workouts/{workoutId}/execises/{exerciseId}")
+	public void updateExercise(@RequestBody Exercise exercise, @PathVariable String workoutId) {
+		exercise.setWorkout(new Workout(workoutId, -1, -1));
+		exerciseService.updateExercise(exercise);
 	}
 	
-	@DeleteMapping(value = "/exercises/{id}")
-	public void deleteExercise(@PathVariable String id) {
-		exerciseService.deleteExercise(id);
+	@DeleteMapping(value = "/workouts/{workoutId}/execises/{exerciseId}")
+	public void deleteExercise(@PathVariable String exerciseId) {
+		exerciseService.deleteExercise(exerciseId);
 	}
 }

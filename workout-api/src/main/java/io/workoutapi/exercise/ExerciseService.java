@@ -12,9 +12,9 @@ public class ExerciseService {
 	@Autowired
 	private ExerciseRepository exerciseRepository;
 	
-	public List<Exercise> getAllExercises() {
+	public List<Exercise> getAllExercises(String workoutId) {
 		List<Exercise> exercises = new ArrayList<Exercise>();
-		exerciseRepository.findAll().forEach(exercises::add);
+		exerciseRepository.findByWorkoutId(workoutId).forEach(exercises::add);
 		return exercises;
 	}
 	
@@ -26,7 +26,7 @@ public class ExerciseService {
 		exerciseRepository.save(exercise);
 	}
 
-	public void updateExercise(Exercise exercise, String id) {
+	public void updateExercise(Exercise exercise) {
 		exerciseRepository.save(exercise);
 	}
 
